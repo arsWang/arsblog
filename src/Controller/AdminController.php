@@ -24,7 +24,7 @@ class AdminController extends AbstractController{
     #[Route('/{id}/edit', name: 'user_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, User $user): Response
     {
-        $form = $this->createForm(BlogType::class, $user);
+        $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -33,7 +33,7 @@ class AdminController extends AbstractController{
             return $this->redirectToRoute('admin_dashboard', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('blog/edit.html.twig', [
+        return $this->renderForm('admin/edit.html.twig', [
             'user' => $user,
             'form' => $form,
         ]);
