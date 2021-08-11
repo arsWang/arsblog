@@ -19,8 +19,20 @@
                 <th>Blog</th>
                 <td>{{ blog.blog }}</td>
             </tr>
+            <th>Comments</th>
+            {% for comment in blog.comments %}
+            <tr>
+                <td>{{ comment.comments }}</td>
+            </tr>
+            {% endfor %}
         </tbody>
     </table>
+   
+    <form action="" method="post"> 
+        <input type="text" name="newcom" value="add a comment"> 
+        <input type="submit" value="submit">
+    </form>  
+    <br>   
 
     <a href="{{ path('blog_index') }}">back to list</a>
 

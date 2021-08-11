@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Blog;
+use App\Entity\Comment;
 use App\Form\BlogType;
 use App\Repository\BlogRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,7 +18,8 @@ class BlogController extends AbstractController
     public function index(BlogRepository $blogRepository): Response
     {   
         return $this->render('blog/index.html.twig', [
-            'blogs' => $blogRepository->findAll(),
+           'blogs' => $blogRepository->findAll(),
+           //'blogs' => $blogRepository->findOneBy(['title'=>'1'])
         ]);
     }
 
@@ -26,6 +28,7 @@ class BlogController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
         $blog = new Blog();
+        $comment = new Comment();
         $form = $this->createForm(BlogType::class, $blog);
         $form->handleRequest($request);
 
@@ -51,6 +54,9 @@ class BlogController extends AbstractController
         ]);
     }
 
+
+
+
     #[Route('/{id}/edit', name: 'blog_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Blog $blog): Response
     {
@@ -68,6 +74,7 @@ class BlogController extends AbstractController
             'form' => $form,
         ]);
     }
+    
 
     #[Route('/{id}', name: 'blog_delete', methods: ['POST'])]
     public function delete(Request $request, Blog $blog): Response
